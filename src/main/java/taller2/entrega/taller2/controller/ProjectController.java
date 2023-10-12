@@ -4,12 +4,15 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import taller2.entrega.taller2.persistence.models.Autor;
 import taller2.entrega.taller2.persistence.models.Libro;
 import taller2.entrega.taller2.service.IProjectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/")
@@ -17,87 +20,64 @@ public class ProjectController {
     private IProjectService projectService;
     public ProjectController(IProjectService projectService){
         this.projectService = projectService;
-        projectService.create(new Libro("Mil años de soledad", "01", "Norma",
-                "Gabriel García Marquez", 199, 1000));
     }
 
-    @GetMapping("/autores")
-    public String listAllAuthors(){
-        this.projectService
-    }
-
-    @GetMapping()
-    public String getHome(){
-        return "home";
+    // libros
+    @PostMapping("/libros")
+    public Libro createLibro(@RequestBody Libro libro){
+        return this.projectService.createLibro(libro);
     }
 
     @GetMapping("/libros")
-    public String listAll(Model model){
-        model.addAttribute("libros", projectService.listLibro());
-        return "list_books";
+    public List<Libro> listLibros(){
+        return this.projectService.listLibros();
     }
 
     @GetMapping("/libros/{id}")
-    public String showDetails(@PathVariable String id, Model model) {
-        Libro libro = this.projectService.search(id).orElse(null);
-        if (libro == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity not found");
-        }
-        model.addAttribute("libro", libro);
-        return "book_details";
+    public Libro getLibroById(@PathVariable Long id){
+        Optional<Libro> libro = this.projectService.searchLibro(id);
+
+        return libro.orElse(null);
     }
 
-    @GetMapping("/libros/create")
-    public String mostrarFormularioCreacion() {
-    return "create_book";
-}
-    //
-    @PostMapping("/libros/create")
-    public String handleSubmit(Model model, @ModelAttribute Libro newLibro) {
-        Libro created = this.projectService.create(newLibro);
+    /*
+    @PutMapping("/libros/{id}")
+    public Libro editLibro(@PathVariable Long id, @RequestBody Libro libro){
 
-        if (created != null){
-            model.addAttribute("confirmation", 1);
-        } else {
-            model.addAttribute("confirmation", 0);
-        }
-        return "alert";
+
+        return this.projectService.editLibro()
+    }*/
+
+    @DeleteMapping("/libros/{id}")
+    public boolean deleteLibro(@PathVariable Long id){
+        return this.projectService.deleteLibro(id);
     }
 
-    // edit
-    @GetMapping("/libros/{id}/edit")
-    public String editForm(Model model, @PathVariable String id){
-        if (this.projectService.search(id).isPresent()) {
-            model.addAttribute("libro", this.projectService.search(id).get());
-            return "edit";
-        } else {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "entity not found"
-            );
-        }
+    // autores
+    @GetMapping("/autores")
+    public List<Autor> listAllAuthors(){
+        return this.projectService.listAutores();
     }
 
-    @PostMapping("/libros/edit")
-    public String handleEdit(Model model, @ModelAttribute Libro newLibro) {
-        Libro edited = this.projectService.edit(newLibro);
+    @GetMapping("/autores/{id}")
+    public Autor getAutorById(@PathVariable Long id){
+        Optional<Autor> autor = this.projectService.searchAutor(id);
 
-        if (edited != null){
-            model.addAttribute("confirmation", 1);
-        } else {
-            model.addAttribute("confirmation", 0);
-        }
-        return "alert";
+        return autor.orElse(null);
     }
 
-    @GetMapping("/libros/{id}/delete")
-    public String delete(Model model, @PathVariable String id){
-        boolean deleted = projectService.delete(id);
+    @PostMapping("/autores")
+    public Autor createAutor(@RequestBody Autor autor) {
+        return this.projectService.createAutor(autor);
+    }
 
-        if (deleted){
-            model.addAttribute("confirmation", 1);
-        } else {
-            model.addAttribute("confirmation", 0);
-        }
-        return "alert";
+    @DeleteMapping("/autores/{id}")
+    public boolean deleteAutor(@PathVariable Long id) {
+        return this.projectService.deleteAutor(id);
+    }
+
+    @GetMapping("/autores/{id}/libros")
+    public List<Libro> getLibrosFromAutor(@PathVariable Long id){
+        return this.projectService.listLibrosFromAutor(id);
     }
 }
