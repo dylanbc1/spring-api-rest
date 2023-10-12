@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Books Administrator</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- no se enlaza con el archivo style.css ¿?. Es necesario colocar el
+     style en la hoja!-->
+    <link href="/static/css/style.css" th:href="@{/static/css/style.css}" rel="stylesheet" />
+    <style>
+        a {
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        body {
+            font-family: Roboto, sans-serif;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        footer {
+            margin-top: 30px;
+            font-weight: bolder;
+            font-size: 15px;
+            text-align: center;
+        }
+
+        nav {
+            font-size: 20px;
+            font-family: "Roboto Black", sans-serif;
+        }
+
+        nav ul {
+            display: flex;
+            background-color: #000fff;
+            padding: 15px;
+            list-style: none;
+            text-align: center;
+            border-radius: 50px;
+        }
+
+        nav li {
+            display: inline-block;
+            flex: 2
+        }
+
+        nav a:hover {
+            color: #EDEFEE;
+            font-size: 23px;
+            text-decoration: none;
+            text-shadow: 0 0 30px #EDEFEE;
+            transition: 0.5s;
+        }
+
+        main section {
+            font-size: 20px;
+            text-align: center;
+            color: #000000;
+        }
+
+        .image-container {
+            display: flex;
+            align-content: center;
+        }
+
+        .image-container img{
+            height: auto;
+            width: auto;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Books Administrator</h1>
+    </header>
+    <nav>
+        <ul>
+            <li>
+                <a href="/books/create">Create new book</a>
+            </li>
+
+            <li>
+                <a href="/books">List books</a>
+            </li>
+        </ul>
+    </nav>
+    <main>
+        <section>A book is a set of emotions and feelings. Write and read one are one of the best things you can do</section>
+    </main>
+    <footer>
+        <div>
+            <p>Dylan - Juan José - Sara</p>
+        </div>
+    </footer>
+</body>
+</html>

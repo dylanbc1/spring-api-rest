@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Books Administrator</title>
+    <style>
+        a {
+            text-decoration: none;
+        }
+
+        body {
+            font-family: Roboto, sans-serif;
+        }
+
+        nav {
+            font-size: 20px;
+            font-family: "Roboto Black", sans-serif;
+        }
+
+        nav a {
+            color: #ffffff;
+        }
+
+        nav ul {
+            display: flex;
+            background-color: #000fff;
+            padding: 15px;
+            list-style: none;
+            text-align: center;
+            border-radius: 50px;
+        }
+
+        nav li {
+            display: inline-block;
+            flex: 3
+        }
+
+        nav a:hover {
+            color: #EDEFEE;
+            font-size: 23px;
+            text-decoration: none;
+            text-shadow: 0 0 30px #EDEFEE;
+            transition: 0.5s;
+        }
+
+        .button.back {
+            background-color: #ffffff;
+            border-width: 2px;
+            border-radius: 5px;
+            border-color: #000fff;
+            padding: 5px;
+        }
+
+        .button.save {
+            background-color: #000fff;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+
+        .button.back a {
+            font-family: "Roboto Black", sans-serif;
+            font-size: 15px;
+        }
+
+        form{
+            padding: 5px;
+        }
+
+        .form-center, .center-button {
+            padding: 5px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .form-center label {
+            margin-right: 5px;
+        }
+
+        button {
+            font-family: "Roboto Black", sans-serif;
+            color: #ffffff;
+            font-size: 15px;
+        }
+
+        h2 {
+            font-family: "Roboto Light", sans-serif;
+            font-size: 20px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <ul>
+        <li>
+            <a href="/">Home</a>
+        </li>
+
+        <li>
+            <a href="/books/create">Create new book</a>
+        </li>
+
+        <li>
+            <a href="/books">List books</a>
+        </li>
+    </ul>
+</nav>
+<main>
+        <section>
+            <article>
+                <h2>Change the attributes of the book:</h2>
+            </article>
+            <article>
+                <form method="POST" th:action="@{/books/edit}" th:object="${newLibro}">
+                    <div class="form-center">
+                        <label for="id">ID</label>
+                        <input type="text" id="id" name="id" th:value="${libro.id}" readonly/>
+                    </div>
+                    <div class="form-center">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" th:value="${libro.name}"/>
+                    </div>
+                    <div class="form-center">
+                        <label for="publisher">Publisher</label>
+                        <input type="text" id="publisher" name="publisher" th:value="${libro.publisher}"/>
+                    </div>
+                    <div class="form-center">
+                        <label for="author">Author</label>
+                        <input type="text" id="author" name="author" th:value="${libro.author}"/>
+                    </div>
+                    <div class="form-center">
+                        <label for="price">Price</label>
+                        <input type="number" id="price" name="price" th:value="${libro.price}"/>
+                    </div>
+                    <div class="form-center">
+                        <label for="amount">Amount</label>
+                        <input type="number" id="amount" name="amount" th:value="${libro.amount}"/>
+                    </div>
+                    <div class="form-center">
+                        <button class="button save" type="submit">Save</button>
+                    </div>
+                </form>
+            </article>
+        </section>
+        <section>
+            <div class="center-button">
+                <button class="button back"><a href="/books" class="btn btn-primary">Back</a></button>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
